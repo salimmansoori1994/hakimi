@@ -1,0 +1,6 @@
+ALTER TABLE `billings` ADD `discount` VARCHAR(255) NOT NULL AFTER `pay_by_online`;
+
+ALTER TABLE `billings` CHANGE `pay_by_cash` `pay_by_cash` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0', CHANGE `pay_by_online` `pay_by_online` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0', CHANGE `discount` `discount` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0';
+
+
+ALTER TABLE `billings_details` CHANGE `category_id` `category_name` INT(11) NOT NULL;

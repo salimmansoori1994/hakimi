@@ -1,0 +1,484 @@
+
+$(document).ready(function(){
+	
+	//alert(base_url);
+$(document).on("input", ".numeric", function() {
+   this.value = this.value.replace(/[^0-9 .]/g, '');
+});
+
+
+	
+	$("#submit_login").click(function(event){
+		  event.preventDefault();
+		 
+		 var username = $('#Username').val();
+		 var password_set = $('#Password').val();
+		 var height = $( window ).height();
+		 
+		 if(!username){
+			    new_alert("#massage","danger","Please enter username");
+				return false ;
+		 }
+		 	 if(!password_set){
+			    new_alert("#massage","danger","Please enter password.");
+				return false ;
+		 } 
+		 
+		// alert(username);
+		   
+		 //  alert('s');
+				$.ajax({  
+				type:"POST",
+				url:base_url+"Admin/Loginform",   
+				data:{password_set:password_set,username:username},
+				success:function(data) {
+						if($.trim(data) != "error"){
+						$("body").html(""); 
+						$("body").html("<div style='margin: 20%;' align='center'><img src='"+base_url+"assets/img/ajax-loaders/loader.gif' style='width: 100px; height:100px;' /> </div>");
+						} 
+						//return false ;
+						if($.trim(data) == "admin"){
+						var surl = base_url+'Admin/Admin_dashboard'; 
+						window.setTimeout(function() { window.location = surl; }, 3000);
+						}else if($.trim(data) == "operates"){
+						var surl = base_url+'operates'; 
+						window.setTimeout(function() { window.location = surl; }, 3000);
+						}else if($.trim(data) == "error"){
+							new_alert("#massage","danger","Invalid Username & Password");
+						}
+				}
+				});  
+				event.preventDefault();
+		});		
+		
+		
+		
+		
+			$("#general_form_submit").submit(function(event){
+			var url = $(this).attr('action');
+			$("#submit").hide();
+			$.ajax({
+				type:"POST",
+				url:base_url+url, 
+				data: new FormData(this),
+				contentType: false,
+				cache: false,
+				processData: false,
+				dataType: "json",  
+				success:function(data) {
+					if(data.mass_id){
+						var mass=data.mass_id;
+					}else{
+						var mass= "#msg";
+					} 
+					
+					if(data.status){ 		
+					
+				
+
+						new_alert(mass,'success',data.mass);
+						if(data.url == "reload"){
+							setTimeout(function(){ reload(); }, 2000);
+						}else if(data.url == "otp"){
+							$("#otp_box").show();
+							$("#school_registration_box").remove();
+							$("#user_id").val(data.user_id);
+						}else if(data.url != ""){
+							setTimeout(function(){ window.location = data.url; }, 2000);
+						}
+						}else{				 
+						new_alert(mass,'danger',data.mass);
+							$("#submit").show();
+						}
+				}
+				});  
+				event.preventDefault();
+		});
+		 
+		
+		$("#category_id").change(function(event){
+			var category_id = $(this).val();
+				$.ajax({
+				type:"POST",
+				url:base_url+"Subcategory/all_subcategory_bycat",
+				data:{category_id:category_id},
+				success:function(data) {
+						$("#subcategory_id").html(data);
+				}
+				});  
+		event.preventDefault();
+		});		
+		
+				$("#notification").submit(function(event){
+			var category_id = $(this).val();
+				$.ajax({
+				type:"POST",
+				url:base_url+"Admin/send_notifecation",
+				data:$("#notification").serialize(),
+				success:function(data) {
+					if(data == "send"){
+					new_alert("#alert_mass","info","Notification Send Successfully");
+					var surl = base_url+'Admin/notify_user'; 
+					window.setTimeout(function() { window.location = surl; }, 3000);
+					}else{
+					new_alert("#alert_mass","danger","Device info not Available ");	
+					}
+				}
+				});  
+		event.preventDefault();
+		});	
+		
+		
+});		
+
+
+function delete_order(customer_order_id,customer_id,order_id)
+{
+
+
+ var   title = "Sure You Delete The order ?"
+var    message = "If You Delete The order. Its delete in database.";
+
+	bootbox.confirm({
+    title:title ,
+    message:message,
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm'
+        }
+    },
+    callback: function (result) {
+          if(result){
+              		$.ajax({ 
+							type:"POST",
+							url:base_url+'Orders/delete_order',
+							data: {customer_order_id :customer_order_id,customer_id:customer_id,order_id:order_id}, 
+							success:function (data){
+		                              if(data == "delete_data"){
+		                                  new_alert("#massage","info","Delete order Successfully");
+		                                  	window.setTimeout(function() { location.reload(); }, 3000);
+		                              }
+								}
+					});	
+              
+          }
+    }
+});
+	
+	
+	
+
+}
+
+
+
+function set_status(status,customer_order_id,customer_id,order_id)
+{
+	var status_value = status.value	;
+	if(status_value != ''){
+ var   title = "Sure Change the Status ?"
+var    message = "If You Change the Status once. The Order is set According to This.";
+
+	bootbox.confirm({
+    title:title ,
+    message:message,
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm'
+        }
+    },
+    callback: function (result) {
+          if(result){
+              		$.ajax({ 
+							type:"POST",
+							url:base_url+'Orders/set_status',
+							data: {status_value : status_value,customer_order_id :customer_order_id,customer_id:customer_id,order_id:order_id}, 
+							success:function (data){
+		                              if(data == "update_data"){
+		                                  new_alert("#massage","info","Update Status Successfully");
+		                                  	window.setTimeout(function() { location.reload(); }, 3000);
+		                              }
+								}
+					});	
+              
+          }
+    }
+});
+	
+	
+	}
+
+}
+
+
+
+function view_order_details(customer_order_id,customer_id)
+{
+				$.ajax({
+					type:"POST",
+					url:base_url+'Orders/order_details',
+					data: {customer_order_id:customer_order_id,customer_id:customer_id},  
+					success:function (data){ 
+						if(data){
+							//alert("s");
+							 $('#order_details_details').html(data);   
+							 $('#order_details_modal').modal('show');   
+						}
+					}
+					});	
+	
+}
+
+
+function update_user_info(customer_id)
+{
+				$.ajax({
+					type:"POST",
+					url:'Customer/all_user_info',
+					data: {customer_id:customer_id},  
+					dataType: "json",
+					success:function (data){ 
+						if(data){
+						//	alert(data.customer_name);
+							 $('#customer_name').val(data.customer_name);   
+							$('#customer_number').val(data.customer_number);   
+							 $('#customer_email').val(data.customer_email);   
+							 $('#customer_address').val(data.customer_address);   
+							 $('#customers_id').val(data.customers_id);   
+							  $('#user_update_model').modal('show');    
+						}
+					}
+					});	
+	
+}
+
+function edit_category(category_id){
+			$.ajax({
+					type:"POST",
+					url:'Category/edit_category',
+					data: {category_id:category_id}, 
+					 dataType: "json",
+					success:function (data){
+						$("#category_name").val(data.category_name);
+						$("#category_description").val(data.category_description);
+						$("#sample_image").removeAttr("required"); 
+						$("#submit_values").html('<input type="hidden" name="category_id" value="'+data.category_id+'" /><input type="hidden" name="old_image" value="'+data.category_image+'" /><button type="submit" class="btn btn-primary btn-xs" style="width:100%;">Update</button>')	
+					}
+					});	
+	
+}
+ 
+ 
+ function category_set(cat_id){
+	 		$.ajax({
+					type:"POST",
+					url:'Category/category_set',
+					data: {category_id:cat_id}, 
+					success:function (data){
+				if(data == "set_update"){
+					  new_alert("#massage","info","set successfully .");
+					window.setTimeout(function() { location.reload(); }, 3000);
+				}
+					}
+					});	
+ }
+
+
+function delete_pro(pro_id){
+	//alert(pro_id);
+ var   title = "Sure Delete the Category ?";
+var    message = "IF You Delete Category,also Delete the  Subcategory & Product Automatically ";
+	bootbox.confirm({
+    title:title ,
+    message:message,
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm'
+        }
+    },
+    callback: function (result) {
+          if(result){
+              		$.ajax({ 
+							type:"POST",
+							url:base_url+'Category/delete_category',
+							data: {category_id : pro_id}, 
+							success:function (data){
+		                              if(data == "delete_category"){
+		                                  new_alert("#massage","info","Delete Category Successfully.");
+		                                  	window.setTimeout(function() { location.reload(); }, 1000);
+		                              }
+								}
+					});	
+              
+          }
+    }
+});
+	
+}
+
+
+
+function delete_subcat(subcat_id){
+  
+	//alert(pro_id);
+ var   title = "Sure Delete the  Sub Category ?";
+var    message = "IF You Delete sub Category,also Delete the Product Automatically ";
+	bootbox.confirm({
+    title:title ,
+    message:message,
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm'
+        }
+    },
+    callback: function (result) {
+          if(result){
+              		$.ajax({ 
+							type:"POST",
+							url:base_url+'Subcategory/delete_subcategory',
+							data: {subcategory_id : subcat_id}, 
+							success:function (data){
+		                              if(data == "delete_subcategory"){
+		                                  new_alert("#massage","info","Delete Sub Category Successfully.");
+		                                  	window.setTimeout(function() { location.reload(); }, 1000);
+		                              }
+								}
+					});	
+              
+          }
+    }
+});
+	
+}
+
+
+function delete_faq(faqs_id){
+  
+	//alert(pro_id);
+ var   title = "Sure Delete the  Faq ?";
+var    message = " ";
+	bootbox.confirm({
+    title:title ,
+    message:message,
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm'
+        }
+    },
+    callback: function (result) {
+          if(result){
+              		$.ajax({ 
+							type:"POST",
+							url:base_url+'Faq/delete_faq',
+							data: {faqs_id : faqs_id}, 
+							success:function (data){
+		                              if(data == "delete_faq"){
+		                                  new_alert("#massage","info","Delete Faq Successfully.");
+		                                  	window.setTimeout(function() { location.reload(); }, 1000);
+		                              }
+								}
+					});	
+              
+          }
+    }
+});
+	
+}
+
+
+
+
+function delete_productes(pro_id){
+  
+	//alert(pro_id);
+ var   title = "Sure Delete the Product ?";
+var    message = "Delete this Product ?";
+	bootbox.confirm({
+    title:title ,
+    message:message,
+    buttons: {
+        cancel: {
+            label: '<i class="fa fa-times"></i> Cancel'
+        },
+        confirm: {
+            label: '<i class="fa fa-check"></i> Confirm'
+        }
+    },
+    callback: function (result) {
+          if(result){
+              		$.ajax({ 
+							type:"POST",
+							url:base_url+'Product/delete_product',
+							data: {product_id : pro_id}, 
+							success:function (data){
+		                              if(data == "delete_product"){
+		                                  new_alert("#massage","info","Delete Product  Successfully.");
+		                                  	window.setTimeout(function() { location.reload(); }, 1000);
+		                              }
+								}
+					});	
+              
+          }
+    }
+});
+	
+}
+
+
+
+
+function active_inactive_user(user_id,status_user,text,table,update_by_feild,update_feild,responce_text){
+		
+		
+		bootbox.confirm(text, function(result){
+    	if(result){
+					//alert(ticket_number);
+	$.ajax({
+		type:"POST",
+		url:base_path+'Comman_data/active_inactive_user', 
+		data: {user_id:user_id,status_user:status_user,text:text,table:table,update_by_feild:update_by_feild,update_feild:update_feild,responce_text:responce_text}, 
+		dataType:'json',
+		success:function (data){
+					if(data.status){
+						alert_mass("#mass",'success',data.mass);
+								setTimeout(function(){ location.reload(); },1000);
+					}else{
+						alert_mass("#mass",'danger',data.mass);
+					}
+					}
+	});	
+	event.preventDefault();	
+				}
+});
+event.preventDefault();
+		}
+
+
+
+
+
+
+function new_alert(set_id,type,msg){
+	$(set_id).html('<div class="alert alert-'+type+'"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+msg+'</div>');
+	}
+
+
+	function reload(){
+		window.close();
+		location.reload();
+		}

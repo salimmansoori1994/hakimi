@@ -1,0 +1,60 @@
+.no_padding{
+	padding:0px;
+}
+
+.content__title{
+	    margin-bottom: 0px !important; 
+}
+
+.thumbnail a>img{
+    height: 95px;
+}
+
+.thumbnail{
+	
+	    background-color:rgba(255,255,255,0.15);
+}
+select {
+     background-color: #b30e38;
+    color: white;
+}
+
+.form-control {
+	    color: #ffffff;
+}
+
+.chosen-container .chosen-drop{
+background: #040404e6;
+    color: white;
+ 
+}
+
+.thumbnails > li {
+    display: inline-block;
+    margin-left: 15px;
+    height: 129px;
+    width: 140px;
+}
+
+.thumbnail {
+
+    margin-bottom: 33px !important;
+}
+
+.thumbnail > a {
+    display: initial;
+}
+
+.modal-body{
+        overflow-y: scroll;
+}
+
+.required{
+    color: red;
+}
+
+body{
+	    background: linear-gradient(45deg, #647DEE, #7F53AC) !important;
+    background-size: cover !important;
+}
+}

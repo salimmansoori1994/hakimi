@@ -1,0 +1,72 @@
+.white_box{
+    /* background:white; */
+    color:black;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    color: rgb(33 32 32 / 85%) !important;
+}
+
+.select2-container--default .select2-selection--single{
+    background-color:white !important;
+    border-bottom: 1px solid rgb(255 87 34)   v
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder{
+    color:rgb(1 1 1 / 50%) !important;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color:rgb(1 1 1 / 50%) !important;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+    color:rgb(1 1 1 / 50%) !important;
+}
+
+.box_Set {
+    background: white;
+    color: #030303;
+    border: 3px solid #ff884a;
+    border-radius: 8px;
+    height: 800px;
+    float: left;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 1.25;
+    /* padding: 0.6rem 1px; */
+    color: #FF5722;
+}
+
+.table thead>tr>th {
+    border-top: 0;
+    border-bottom: 0;
+    padding: 1px 6px;
+}
+
+.table tbody>tr>td {
+    border-top: 0;
+    border-bottom: 0;
+    padding: 1px 6px;
+}
+
+.select2 {
+    width: 100%;
+    border-bottom: 1px solid rgb(255 87 34) !important;
+}
+
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.form-control {
+  
+    color: rgb(18 17 17 / 85%) !important;
+    background-image: none;
+    background-clip: padding-box;
+    border-bottom: 1px solid rgb(255 87 34) !important;
+
+}

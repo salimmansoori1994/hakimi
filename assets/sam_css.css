@@ -1,0 +1,159 @@
+.no_padding{
+	padding:0px !important;
+}
+
+body{
+    font-family: system-ui !important;
+    font-size: 20px !important;
+}
+
+.form-control{
+    font-size: 20px !important;
+}
+
+.content__title{
+	    margin-bottom: 0px !important; 
+}
+
+.alert {
+    padding: 5px !important; 
+}
+ 
+.thumbnail a>img{
+    height: 95px;
+}
+
+
+
+.thumbnail{
+	
+	    background-color:rgba(255,255,255,0.15);
+}
+select {
+     background-color: #b30e38;
+    color: white;
+}
+
+
+option {
+    background: black !important;
+}
+
+.form-control {
+	    color: #ffffff;
+}
+
+th a{
+    color: #ffc7a0 !important
+}
+
+.form-group label {
+    font-size: 15px;
+}
+
+#data-table_wrapper th {
+    padding: 4px 5px !important;
+    border: 1px solid #606060;
+}
+#data-table_wrapper td {
+    padding: 4px 10px !important;
+    border: 1px solid #606060;
+}
+.navigation>li>a {
+    padding: 10px 5px;
+    font-size: 17px;
+    border-radius: 2px;
+}
+
+thead tr {
+    font-weight: 900;
+    border-radius: 12px;
+    font-size: 15px;
+    background: #ffc7a0;
+    color: black;
+}
+
+
+.chosen-container .chosen-drop{
+background: #040404e6;
+    color: white;
+ 
+}
+
+.thumbnails > li {
+    display: inline-block;
+    margin-left: 15px;
+    height: 129px;
+    width: 140px;
+}
+
+.thumbnail {
+
+    margin-bottom: 33px !important;
+}
+
+.thumbnail > a {
+    display: initial;
+}
+
+
+.required{
+    color: red;
+}
+
+
+
+#data-table_wrapper{
+	    overflow-x: scroll  !important;
+        overflow-y: hidden;
+}
+
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(3.45rem + -4px) !important;
+    padding: 0px 1rem;
+    line-height: 2.25;
+}
+
+#front_nav_box{
+    background: linear-gradient(to right, #ffffff 0%,#ff6f1c 100%);
+    margin-bottom: 12px;
+    height: 30px;
+    border-radius: 20px;
+}
+
+
+#front_nav_box_search{
+    background: linear-gradient(to right, #5f5b5b 0%,#fe7221 100%);
+    margin-bottom: 12px;
+    height: 60px;
+    border-radius: 20px;
+}
+
+.nav-link {
+    display: block;
+    padding: 0px;
+    font-size: 14px;
+    padding : 0px !important;
+}
+
+
+li.nav-item {
+    color: white;
+    padding: 0px 4px;
+    background: #FF5722;
+    margin-right: 12px;
+    border-radius: 6px;
+    font-weight: 900;
+}
+
+
+
+
+#massage{
+    clear: both;
+}
+
+#footer_set_font{
+    font-size: 12px;
+}
